@@ -104,4 +104,13 @@ response = CloudSigma.delete("/servers/#{server_clone_id}/", query: [recurse: "a
 # 204 is successful delete.
 204 == response.status
 
+# By default, the library will send requests to the API endpoint specified in
+# the configuration file. It is possible to send API requests to other
+# endpoints by manually creating an endpoint client, then prepending the
+# created client to the argument list of any call to the API.
+# For example, to get a list of servers from the WDC endpoint instead of the
+# default one you've configured:
+client = CloudSigma.make_endpoint_client("wdc")
+response = CloudSigma.get(client, "/servers/")
+
 ```

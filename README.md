@@ -57,7 +57,7 @@ server_id = server["uuid"]
 # Get server.
 response = CloudSigma.get("/servers/#{server_id}/")
 Apex.ap(response.body)
-ip = Enum.at(response.body["nics"], 0)["ip_v4_conf"]["ip"]["uuid"]
+ip = Enum.at(response.body["nics"], 0)["ip_v4"]["ip"]["uuid"]
 status = response.body["status"]
 
 # Update server.

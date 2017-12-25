@@ -38,7 +38,7 @@ to include that to hit the right path on the endpoint.
 
 ```elixir
 # Get location info.
-response = CloudSigma.get("/locations/")
+{:ok, response} = CloudSigma.get("/locations/")
 IO.puts response.status
 IO.inspect response.headers
 IO.inspect response.body
@@ -46,16 +46,16 @@ IO.inspect response.body
 location = Enum.at(response.body["objects"], 0)
 location_id = location["id"]
 # Get only the first three locations.
-response = CloudSigma.get("/locations/", query: [offset: 0, limit: 3])
+{:ok, response} = CloudSigma.get("/locations/", query: [offset: 0, limit: 3])
 
 #Get servers.
-response = CloudSigma.get("/servers/")
+{:ok, response} = CloudSigma.get("/servers/")
 # First server.
 server = Enum.at(response.body["objects"], 0)
 server_id = server["uuid"]
 
 # Get server.
-response = CloudSigma.get("/servers/#{server_id}/")
+{:ok, response} = CloudSigma.get("/servers/#{server_id}/")
 Apex.ap(response.body)
 ip = Enum.at(response.body["nics"], 0)["ip_v4"]["ip"]["uuid"]
 status = response.body["status"]
@@ -67,18 +67,18 @@ data = %{
   mem: 4294967296,
   vnc_password: "updated_password",
 }
-response = CloudSigma.put("/servers/#{server_id}/", data)
+{:ok, response} = CloudSigma.put("/servers/#{server_id}/", data)
 name = response.body["name"]
 
 # Get drives.
-response = CloudSigma.get("/drives/")
+{:ok, response} = CloudSigma.get("/drives/")
 Enum.each response.body["objects"], fn drive ->
   IO.inspect drive
 end
 # First drive
 drive = Enum.at(response.body["objects"], 0)
 drive_id = drive["uuid"]
-response = CloudSigma.get("/drives/#{drive_id}/")
+{:ok, response} = CloudSigma.get("/drives/#{drive_id}/")
 name = response.body["name"]
 
 # Clone server.
@@ -86,21 +86,21 @@ data = %{
   name: "example-server-clone",
   random_vnc_password: true,
 }
-response = CloudSigma.post("/servers/#{server_id}/action/", data, query: [do: "clone"])
+{:ok, response} = CloudSigma.post("/servers/#{server_id}/action/", data, query: [do: "clone"])
 clone_name = response.body["name"]
 server_clone_id = response.body["uuid"]
 clone_status = response.body["status"]
 
 # Start the cloned server.
-response = CloudSigma.post("/servers/#{server_clone_id}/action/", %{}, query: [do: "start"])
+{:ok, response} = CloudSigma.post("/servers/#{server_clone_id}/action/", %{}, query: [do: "start"])
 start_result = response.body["result"]
 
 # Stop the cloned server.
-response = CloudSigma.post("/servers/#{server_clone_id}/action/", %{}, query: [do: "stop"])
+{:ok, response} = CloudSigma.post("/servers/#{server_clone_id}/action/", %{}, query: [do: "stop"])
 start_result = response.body["result"]
 
 # Delete cloned server and all attached drives.
-response = CloudSigma.delete("/servers/#{server_clone_id}/", query: [recurse: "all_drives"])
+{:ok, response} = CloudSigma.delete("/servers/#{server_clone_id}/", query: [recurse: "all_drives"])
 # 204 is successful delete.
 204 == response.status
 
@@ -111,6 +111,6 @@ response = CloudSigma.delete("/servers/#{server_clone_id}/", query: [recurse: "a
 # For example, to get a list of servers from the WDC endpoint instead of the
 # default one you've configured:
 client = CloudSigma.make_endpoint_client("wdc")
-response = CloudSigma.get(client, "/servers/")
+{:ok, response} = CloudSigma.get(client, "/servers/")
 
 ```

@@ -12,6 +12,7 @@ defmodule CloudSigma do
   @user_email Application.get_env(:cloudsigma, :user_email)
   @password Application.get_env(:cloudsigma, :password)
 
+  plug Tesla.Middleware.Tuples, rescue_errors: :all
   plug Tesla.Middleware.BaseUrl, make_endpoint()
   plug Tesla.Middleware.Headers, make_auth_header()
   plug Tesla.Middleware.JSON

@@ -9,8 +9,8 @@ defmodule CloudSigma do
 
   use Tesla, only: [:get, :post, :put, :delete, :options]
 
-  @user_email Application.get_env(:cloudsigma, :user_email)
-  @password Application.get_env(:cloudsigma, :password)
+  @user_email Application.fetch_env!(:cloudsigma, :user_email)
+  @password Application.fetch_env!(:cloudsigma, :password)
 
   plug Tesla.Middleware.Tuples, rescue_errors: :all
   plug Tesla.Middleware.BaseUrl, make_endpoint()

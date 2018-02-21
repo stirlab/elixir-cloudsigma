@@ -9,9 +9,6 @@ defmodule CloudSigma do
 
   use Tesla, only: [:get, :post, :put, :delete, :options]
 
-  @user_email Application.fetch_env!(:cloudsigma, :user_email)
-  @password Application.fetch_env!(:cloudsigma, :password)
-
   plug Tesla.Middleware.Tuples, rescue_errors: :all
   plug Tesla.Middleware.BaseUrl, make_endpoint()
   plug Tesla.Middleware.Headers, make_auth_header()
@@ -36,7 +33,9 @@ defmodule CloudSigma do
   end
 
   def make_auth_header() do
-    %{"Authorization" => "Basic " <> Base.encode64(@user_email <> ":" <> @password)}
+    user_email = Application.fetch_env!(:cloudsigma, :user_email)
+    password = Application.fetch_env!(:cloudsigma, :password)
+    %{"Authorization" => "Basic " <> Base.encode64(user_email <> ":" <> password)}
   end
 
 end

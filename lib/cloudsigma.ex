@@ -28,6 +28,7 @@ defmodule CloudSigma do
   end
 
   def make_endpoint_client(loc) do
+    loc = if is_atom(loc), do: Atom.to_string(loc), else: loc
     slug = Application.get_env(:cloudsigma, :api_endpoint_slug, @api_endpoint_slug_default)
     endpoint_url = String.replace(slug, ~r/{loc}/, loc)
     Tesla.build_client [

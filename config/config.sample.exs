@@ -30,10 +30,18 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 config :cloudsigma, debug_http: false
-# Uncomment for deeper level HTTP debugging.
-#config :cloudsigma, api_endpoint: "https://requestb.in"
+
 # Override to send requests to another API endpoint location.
 #config :cloudsigma, api_endpoint_location: "zrh"
+# Uncomment for deeper level HTTP debugging.
+#config :cloudsigma, api_endpoint: "https://requestb.in"
+
+# Redirect/retry options.
+#config :cloudsigma, http_follow_redirects: true
+#config :cloudsigma, http_retry_enabled: true
+#config :cloudsigma, http_retry_delay: 1000
+#config :cloudsigma, http_retry_max_retries: 5
+
 # New accounts are created at https://www.cloudsigma.com, LOGIN tab.
 # Additional users can be added to master account via ACLs at
 # https://mia.cloudsigma.com/ui/#/acls

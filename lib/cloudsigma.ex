@@ -41,7 +41,6 @@ defmodule CloudSigma do
   end
 
   def make_endpoint_client(loc) do
-    loc = if is_atom(loc), do: Atom.to_string(loc), else: loc
     endpoint_url = String.replace(@api_endpoint_slug, ~r/{loc}/, loc)
     Tesla.build_client [
       {Tesla.Middleware.BaseUrl, endpoint_url},

@@ -3,20 +3,24 @@
 Dead simple [Elixir](http://elixir-lang.github.io) wrapper for the
 [CloudSigma API](https://cloudsigma-docs.readthedocs.io/en/latest).
 
-## Installation (for now)
+## Installation
 
+First, add CloudSigma to your `mix.exs` dependencies:
 
 ```elixir
 def deps do
-  [
-    {:cloudsigma, git: "https://github.com/stirlab/elixir-cloudsigma.git"},
-  ]
+  [{:cloudsigma, "~> 0.1"}]
 end
 ```
+Then, update your dependencies:
 
 ```sh
-cp config/config.sample.exs config/config.exs
+$ mix deps.get
 ```
+
+## Configuration
+
+See the [sample configuration](config/config.sample.exs)
 
 Edit to taste. Pay particular attention to the ```api_endpoint_location:```
 setting -- this should be set to the three letter abbreviation for the API

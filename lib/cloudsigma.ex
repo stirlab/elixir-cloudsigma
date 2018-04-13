@@ -9,17 +9,17 @@ defmodule CloudSigma do
   @api_endpoint_slug_default "https://{loc}.cloudsigma.com/api/2.0"
   @api_endpoint_location_default "zrh"
 
-  @api_endpoint_slug Application.get_env(:cloudsigma, :api_endpoint_slug, @api_endpoint_slug_default)
-  @api_endpoint_location Application.get_env(:cloudsigma, :api_endpoint_location, @api_endpoint_location_default)
+  @api_endpoint_slug Application.get_env(:cloudsigma_api_wrapper, :api_endpoint_slug, @api_endpoint_slug_default)
+  @api_endpoint_location Application.get_env(:cloudsigma_api_wrapper, :api_endpoint_location, @api_endpoint_location_default)
 
-  @user_email Application.fetch_env!(:cloudsigma, :user_email)
-  @password Application.fetch_env!(:cloudsigma, :password)
+  @user_email Application.fetch_env!(:cloudsigma_api_wrapper, :user_email)
+  @password Application.fetch_env!(:cloudsigma_api_wrapper, :password)
 
-  @http_follow_redirects Application.get_env(:cloudsigma, :http_follow_redirects, true)
-  @http_retry_enabled Application.get_env(:cloudsigma, :http_retry_enabled, true)
-  @http_retry_delay Application.get_env(:cloudsigma, :http_retry_delay, 1000)
-  @http_retry_max_retries Application.get_env(:cloudsigma, :http_retry_max_retries, 5)
-  @debug_http Application.get_env(:cloudsigma, :debug_http, false)
+  @http_follow_redirects Application.get_env(:cloudsigma_api_wrapper, :http_follow_redirects, true)
+  @http_retry_enabled Application.get_env(:cloudsigma_api_wrapper, :http_retry_enabled, true)
+  @http_retry_delay Application.get_env(:cloudsigma_api_wrapper, :http_retry_delay, 1000)
+  @http_retry_max_retries Application.get_env(:cloudsigma_api_wrapper, :http_retry_max_retries, 5)
+  @debug_http Application.get_env(:cloudsigma_api_wrapper, :debug_http, false)
 
   plug Tesla.Middleware.Tuples, rescue_errors: :all
   plug Tesla.Middleware.BaseUrl, make_endpoint()
@@ -37,7 +37,7 @@ defmodule CloudSigma do
 
   def make_endpoint() do
     api_endpoint_default = String.replace(@api_endpoint_slug, ~r/{loc}/, @api_endpoint_location)
-    Application.get_env(:cloudsigma, :api_endpoint, api_endpoint_default)
+    Application.get_env(:cloudsigma_api_wrapper, :api_endpoint, api_endpoint_default)
   end
 
   def make_endpoint_client(loc) do

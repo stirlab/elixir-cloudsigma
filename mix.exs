@@ -3,7 +3,7 @@ defmodule CloudSigma.Mixfile do
 
   def project do
     [
-      app: :cloudsigma,
+      app: :cloudsigma_api_wrapper,
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env == :prod,

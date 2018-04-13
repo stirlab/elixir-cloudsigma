@@ -9,7 +9,7 @@ First, add CloudSigma to your `mix.exs` dependencies:
 
 ```elixir
 def deps do
-  [{:cloudsigma, "~> 0.1"}]
+  [{:cloudsigma_api_wrapper, "~> 0.1"}]
 end
 ```
 Then, update your dependencies:

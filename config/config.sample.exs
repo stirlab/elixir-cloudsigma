@@ -29,7 +29,8 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-config :cloudsigma_api_wrapper, debug_http: false
+# See https://hexdocs.pm/tesla/Tesla.Middleware.Logger.html
+config :cloudsigma_api_wrapper, enable_tesla_log: false
 
 # Override to send requests to another API endpoint location.
 #config :cloudsigma_api_wrapper, api_endpoint_location: "zrh"

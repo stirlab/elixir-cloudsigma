@@ -9,7 +9,9 @@ defmodule CloudSigma do
   @api_endpoint_slug_default "https://{loc}.cloudsigma.com/api/2.0"
   @api_endpoint_location_default "zrh"
 
-  plug Tesla.Middleware.Tuples, rescue_errors: :all
+  if Application.get_env(:cloudsigma_api_wrapper, :enable_tesla_log, false) do
+    plug Tesla.Middleware.Logger
+  end
   plug Tesla.Middleware.BaseUrl, make_endpoint()
   plug Tesla.Middleware.Headers, make_auth_header()
   plug Tesla.Middleware.JSON
@@ -18,9 +20,6 @@ defmodule CloudSigma do
   end
   if Application.get_env(:cloudsigma_api_wrapper, :http_follow_redirects, true) do
     plug Tesla.Middleware.FollowRedirects
-  end
-  if Application.get_env(:cloudsigma_api_wrapper, :debug_http, false) do
-    plug Tesla.Middleware.DebugLogger
   end
 
   def make_endpoint() do
@@ -36,7 +35,7 @@ defmodule CloudSigma do
   end
 
   def make_auth_header() do
-    %{"Authorization" => "Basic " <> Base.encode64(Application.fetch_env!(:cloudsigma_api_wrapper, :user_email) <> ":" <> Application.fetch_env!(:cloudsigma_api_wrapper, :password))}
+    [{"Authorization", "Basic " <> Base.encode64(Application.fetch_env!(:cloudsigma_api_wrapper, :user_email) <> ":" <> Application.fetch_env!(:cloudsigma_api_wrapper, :password))}]
   end
 
 end

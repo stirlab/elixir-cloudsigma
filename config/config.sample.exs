@@ -35,7 +35,7 @@ config :cloudsigma_api_wrapper, enable_tesla_log: false
 # Override to send requests to another API endpoint location.
 #config :cloudsigma_api_wrapper, api_endpoint_location: "zrh"
 # Uncomment for deeper level HTTP debugging.
-#config :cloudsigma_api_wrapper, api_endpoint: "https://requestb.in"
+#config :cloudsigma_api_wrapper, api_endpoint: "https://requestbin.fullcontact.com"
 
 # Redirect/retry options.
 #config :cloudsigma_api_wrapper, http_follow_redirects: true
